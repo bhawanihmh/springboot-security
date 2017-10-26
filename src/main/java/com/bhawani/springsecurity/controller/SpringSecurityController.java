@@ -36,4 +36,21 @@ public class SpringSecurityController {
 		
 		return "Hello World!!!";
 	}
+	
+	@GetMapping
+	@RequestMapping("/secure")
+	public String secure(@AuthenticationPrincipal final UserDetails userDetails){
+		LOGGER.info(userDetails.getUsername());
+		LOGGER.info(userDetails.getPassword());
+		
+		String userName = userDetails.getUsername();
+		
+		System.out.println("SpringSecurityController.secure() userName = " + userName);
+		
+		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+		
+		authorities.forEach(System.out::println);
+		
+		return "You are secure!!!";
+	}
 }
